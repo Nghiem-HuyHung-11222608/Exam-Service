@@ -1,49 +1,38 @@
 package com.lms.exam.model;
 
-
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExamAttempt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "exam_id")
     private Exam exam;
 
     private String userId;
 
     @ElementCollection
-    @CollectionTable(name = "attempt_answers", joinColumns = @JoinColumn(name = "attempt_id"))
+    @CollectionTable(
+            name = "attempt_answers",
+            joinColumns = @JoinColumn(name = "attempt_id")
+    )
     @Column(name = "answer")
     private List<Integer> answers;
 
-    private int tries;
     private int score;
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private int tries;
 
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public Exam getExam() { return exam; }
-    public void setExam(Exam exam) { this.exam = exam; }
-
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
-
-    public List<Integer> getAnswers() { return answers; }
-    public void setAnswers(List<Integer> answers) { this.answers = answers; }
-
-    public int getTries() { return tries; }
-    public void setTries(int tries) { this.tries = tries; }
-
-    public int getScore() { return score; }
-    public void setScore(int score) { this.score = score; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }

@@ -1,6 +1,6 @@
 package com.lms.exam.controller;
 
-import com.example.examservice.dto.*;
+import com.lms.exam.dto.*;
 import com.lms.exam.dto.*;
 import com.lms.exam.service.ExamService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/exams")
+@RequestMapping("/exams")
 public class ExamController {
     private final ExamService service;
 

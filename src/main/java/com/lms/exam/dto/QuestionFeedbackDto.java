@@ -1,11 +1,18 @@
 package com.lms.exam.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class QuestionFeedbackDto {
-    public Long questionId;
-    public String questionText;
-    public Integer chosenAnswerIndex;
-    public Integer correctAnswerIndex;
-    public boolean correct;
-    public String chosenAnswer;
-    public String correctAnswer;
+    private Long questionId;
+    private String questionText;
+    private Integer correctAnswerIndex;
+    private String correctAnswerText;
+    private Integer chosenAnswerIndex;
+    private String chosenAnswerText;
+    private Boolean correct;
 }

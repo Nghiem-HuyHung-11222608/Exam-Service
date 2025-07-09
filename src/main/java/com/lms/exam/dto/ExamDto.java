@@ -1,13 +1,20 @@
 package com.lms.exam.dto;
 
-import java.time.LocalDateTime;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExamDto {
-    public Long id;
-    public String title;
-    public Integer durationMinutes;
-    public String location;
-    public LocalDateTime timeslot;
-    public List<QuestionDto> questions;
+    private Long id;
+    private String title;
+    private Integer durationMinutes;
+    private String location;
+    private String timeslot;
+    private List<QuestionDto> questions;
 }

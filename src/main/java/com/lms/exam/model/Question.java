@@ -1,41 +1,32 @@
 package com.lms.exam.model;
 
-
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String text;
-
-    @ElementCollection
-    @CollectionTable(name = "question_choices", joinColumns = @JoinColumn(name = "question_id"))
-    @Column(name = "choice")
-    private List<String> choices;
-
-    private int correctAnswerIndex;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "exam_id")
     private Exam exam;
 
+    private String text;
+    private Integer correctAnswerIndex;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getText() { return text; }
-    public void setText(String text) { this.text = text; }
-
-    public List<String> getChoices() { return choices; }
-    public void setChoices(List<String> choices) { this.choices = choices; }
-
-    public int getCorrectAnswerIndex() { return correctAnswerIndex; }
-    public void setCorrectAnswerIndex(int correctAnswerIndex) { this.correctAnswerIndex = correctAnswerIndex; }
-
-    public Exam getExam() { return exam; }
-    public void setExam(Exam exam) { this.exam = exam; }
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "question_choices",
+            joinColumns = @JoinColumn(name = "question_id")
+    )
+    @Column(name = "choice")
+    private List<String> choices;
 }

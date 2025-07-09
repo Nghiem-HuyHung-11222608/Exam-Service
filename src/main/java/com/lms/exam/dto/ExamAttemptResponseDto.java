@@ -1,12 +1,18 @@
 package com.lms.exam.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExamAttemptResponseDto {
-    public Long attemptId;
-    public int score;
-    public List<Integer> userAnswers;
-    public List<Integer> correctAnswers;
-    public int triesLeft;
-    public List<QuestionFeedbackDto> questionFeedbacks;
+    private Long attemptId;
+    private Integer score;
+    private List<Integer> userAnswers;
+    private List<Integer> correctAnswers;
+    private Integer triesLeft;
+    private List<QuestionFeedbackDto> questionFeedbacks;
 }
