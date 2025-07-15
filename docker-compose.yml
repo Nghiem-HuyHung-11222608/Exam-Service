@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  postgres:
+  examPg:
     image: postgres:14.18
-    container_name: postgres
+    container_name: examPg
     restart: unless-stopped
     environment:
       POSTGRES_USER: examuser
@@ -12,7 +12,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - exampgdata:/var/lib/postgresql/data
 
 volumes:
-  pgdata:
+  exampgdata:

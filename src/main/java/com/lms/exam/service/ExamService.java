@@ -1,6 +1,9 @@
 package com.lms.exam.service;
 
-import com.lms.exam.dto.*;
+import com.lms.exam.dto.response.ExamDto;
+import com.lms.exam.dto.response.ExamAnswerDto;
+import com.lms.exam.dto.response.QuestionDto;
+
 import java.util.List;
 
 public interface ExamService {
@@ -10,7 +13,7 @@ public interface ExamService {
     void deleteExam(Long id);
     QuestionDto addQuestion(Long examId, QuestionDto qdto);
     void deleteQuestion(Long questionId);
-    ExamResultDto submitExamResult(Long examId, String userId, List<Integer> userAnswers);
-    ExamResultDto getExamResult(Long examId, String userId);
+    ExamAnswerDto submitExamResult(Long examId, String userId, List<Integer> userAnswers);
+    ExamAnswerDto getExamResult(Long examId, String userId);
     ExamDto getExamByLessonId(Long lessonId);
 }
