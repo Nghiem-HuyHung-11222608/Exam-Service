@@ -1,6 +1,8 @@
 package com.lms.exam.controller;
 
-import com.lms.exam.dto.*;
+import com.lms.exam.dto.response.ExamDto;
+import com.lms.exam.dto.response.ExamAnswerDto;
+import com.lms.exam.dto.response.QuestionDto;
 import com.lms.exam.service.ExamServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +52,6 @@ public class ExamController {
         return service.addQuestion(examId, q);
     }
 
-
     @Operation(summary = "Delete a question")
     @DeleteMapping("/questions/{questionId}")
     public void deleteQuestion(@PathVariable Long questionId) {
@@ -59,7 +60,7 @@ public class ExamController {
 
     @Operation(summary = "Submit answers for an exam (single result per user)")
     @PostMapping("/{examId}/submit")
-    public ExamResultDto submitExamResult(
+    public ExamAnswerDto submitExamResult(
             @PathVariable Long examId,
             @RequestParam String userId,
             @RequestBody List<Integer> answers
@@ -69,7 +70,7 @@ public class ExamController {
 
     @Operation(summary = "Get a user's exam result")
     @GetMapping("/{examId}/result")
-    public ExamResultDto getExamResult(
+    public ExamAnswerDto getExamResult(
             @PathVariable Long examId,
             @RequestParam String userId
     ) {
