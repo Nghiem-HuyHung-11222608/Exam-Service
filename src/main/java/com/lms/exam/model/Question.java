@@ -1,13 +1,28 @@
 package com.lms.exam.model;
 
+import com.lms.exam.constant.QuestionType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
+
 import java.util.List;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Question {
@@ -15,18 +30,17 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "exam_id")
-    private Exam exam;
+    @Column(nullable = false)
+    private String content;
 
-    private String text;
-    private Integer correctAnswerIndex;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    private QuestionType type;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "question_choices",
-            joinColumns = @JoinColumn(name = "question_id")
-    )
-    @Column(name = "choice")
-    private List<String> choices;
+    @ManyToMany(mappedBy = "questions")
+    private List<Exam> exams;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<QuestionChoice> choices;
 }
