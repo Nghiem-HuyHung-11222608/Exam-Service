@@ -12,18 +12,9 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 
     @Override
     public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
-        options = options.including(
-                ErrorAttributeOptions.Include.MESSAGE,
-                ErrorAttributeOptions.Include.STACK_TRACE
-        );
-        
-        Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, options);
+        options = options.including(ErrorAttributeOptions.Include.MESSAGE)
+                .excluding(ErrorAttributeOptions.Include.PATH);
 
-        Throwable error = getError(webRequest);
-        if (error instanceof ValidationException) {
-            errorAttributes.put("message", error.getMessage());
-        }
-
-        return errorAttributes;
+        return super.getErrorAttributes(webRequest, options);
     }
 }

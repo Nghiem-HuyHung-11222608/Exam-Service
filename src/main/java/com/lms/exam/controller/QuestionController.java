@@ -9,6 +9,7 @@ import com.lms.exam.dto.response.QuestionDto;
 import com.lms.exam.exception.NotFoundException;
 import com.lms.exam.service.QuestionService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,13 +32,16 @@ public class QuestionController {
 
     @Operation(summary = "Create a new question")
     @PostMapping
-    public QuestionDto createQuestion(@RequestBody CreatedQuestion createdQuestion) {
+    public QuestionDto createQuestion(@Valid @RequestBody CreatedQuestion createdQuestion) {
         return questionService.createQuestion(createdQuestion);
     }
 
     @Operation(summary = "Update a question")
     @PutMapping("/{id}")
-    public QuestionDto updateQuestion(@PathVariable("id") Long questionId, @RequestBody UpdatedQuestion updatedQuestion) {
+    public QuestionDto updateQuestion(
+            @PathVariable("id") Long questionId,
+            @Valid @RequestBody UpdatedQuestion updatedQuestion
+    ) {
         return questionService.updateQuestion(questionId, updatedQuestion);
     }
 

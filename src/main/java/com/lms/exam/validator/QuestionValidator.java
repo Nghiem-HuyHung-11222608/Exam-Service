@@ -6,6 +6,7 @@ import com.lms.exam.dto.request.CreatedQuestionChoice;
 import com.lms.exam.dto.request.UpdatedQuestion;
 import com.lms.exam.dto.request.UpdatedQuestionChoice;
 import com.lms.exam.exception.ValidationException;
+import com.lms.exam.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,8 @@ import static com.lms.exam.constant.QuestionType.SINGLE_CHOICE;
 @RequiredArgsConstructor
 public class QuestionValidator {
 
+    private final MessageService messageService;
+
     public void validateQuestion(CreatedQuestion createdQuestion) {
         Objects.requireNonNull(createdQuestion, "createdQuestion is required");
 
@@ -32,7 +35,7 @@ public class QuestionValidator {
             var correctChoices = choices.stream().filter(CreatedQuestionChoice::isCorrect).toList();
             int choiceNumber = correctChoices.size();
             if (choiceNumber != 1) {
-                throw new ValidationException(ValidatorMessage.QUESTION_SINGLE_CHOICE_NUMBER_MSG.formatted(choiceNumber));
+                throw new ValidationException(messageService.getMessage(ValidatorMessage.QUESTION_SINGLE_CHOICE_NUMBER_MSG, choiceNumber));
             }
         }
     }
@@ -49,7 +52,7 @@ public class QuestionValidator {
             var correctChoices = choices.stream().filter(UpdatedQuestionChoice::isCorrect).toList();
             int choiceNumber = correctChoices.size();
             if (choiceNumber != 1) {
-                throw new ValidationException(ValidatorMessage.QUESTION_SINGLE_CHOICE_NUMBER_MSG.formatted(choiceNumber));
+                throw new ValidationException(messageService.getMessage(ValidatorMessage.QUESTION_SINGLE_CHOICE_NUMBER_MSG, choiceNumber));
             }
         }
     }
